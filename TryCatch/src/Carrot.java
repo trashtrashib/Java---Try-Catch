@@ -26,6 +26,7 @@ public class Carrot extends Food {
     }
     public void info() {
         System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Vegetable%n%n",this.name,this.nutrition,this.calories,this.size);
+        if (this.cooked) {System.out.printf("Special: Receive an additional ingrediant for the rest of the game when eaten.%n%n");} else {System.out.println();}
     }
 
 }

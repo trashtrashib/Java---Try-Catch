@@ -1,0 +1,34 @@
+public class Squash extends Food {
+
+    public Squash(Cooking game) {
+        this.game = game;
+        this.name = "Squash";
+        this.nutrition = 30;
+        this.calories = 180;
+        this.size = 10;
+        this.cooked = false;
+        this.group = FoodGroup.Vegetable;
+    }
+    
+    public void special(Trigger cause, boolean inFridge) {
+        if (!this.cooked && cause == Trigger.added) {this.nutrition++;}
+        if (!this.cooked && cause == Trigger.add) {this.nutrition--;}
+    }
+
+    public void cook() {
+        this.calories += 50;
+        this.name = "Buttered Squash";
+        this.cooked = true;
+    }
+    public void cookinfo() {
+        if (!this.cooked) {
+        System.out.printf("Butter the squash:%n+50 Calories.%nNo longer loses nutrition when adding ingrediants.%n%n");} else {
+            System.out.printf("It's all buttered up!%n%n");
+        }
+    }
+    public void info() {
+        System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Vegetable%n%n",this.name,this.nutrition,this.calories,this.size);
+        if (!this.cooked) {System.out.printf("Special: Loses 1 nutrition whenever you add another ingrediant to the meal.%n%n");} else {System.out.println();}
+    }
+
+}

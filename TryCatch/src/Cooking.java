@@ -25,6 +25,7 @@ public class Cooking {
     public Random getRandom() {return RNG;}
     public int getScore() {return score;}
     public int getFridgeSize() {return fridgeSize;}
+    public int[] getCalArray() {return cals;}
 
     public void setScore(int newScore) {score = newScore;}
     public void setFridge(int newSize) {fridgeSize = newSize;};
@@ -62,7 +63,7 @@ public class Cooking {
 
             Food newfood = new Broccoli(this);
 
-            switch (RNG.nextInt(10)) {
+            switch (RNG.nextInt(15)) {
                 case 0:
                     /// Broccoli
                 break;
@@ -93,6 +94,21 @@ public class Cooking {
                 case 9:
                     newfood = new Rice(this);
                 break;
+                case 10:
+                    newfood = new Blueberry(this);
+                break;
+                case 11:
+                    newfood = new Chicken(this);
+                break;
+                case 12:
+                    newfood = new Yogurt(this);
+                break;
+                case 13:
+                    newfood = new Squash(this);
+                break;
+                case 14:
+                    newfood = new Oats(this);
+                break;
             }
 
             FRIDGE.add(newfood);
@@ -114,11 +130,11 @@ public class Cooking {
 
         int[] calstemp = new int[5];
 
-        calstemp[0] = calPot(FoodGroup.Protein);
-        calstemp[1] = calPot(FoodGroup.Dairy);
-        calstemp[2] = calPot(FoodGroup.Vegetable);
-        calstemp[3] = calPot(FoodGroup.Fruit);
-        calstemp[4] = calPot(FoodGroup.Grain);
+        calstemp[0] = calPot(FoodGroup.Fruit);
+        calstemp[1] = calPot(FoodGroup.Vegetable);
+        calstemp[2] = calPot(FoodGroup.Grain);
+        calstemp[3] = calPot(FoodGroup.Protein);
+        calstemp[4] = calPot(FoodGroup.Dairy);
 
         for (int i = 0; i<5; i++) { // Grant 0.1 mult for each element with value above 0.
             if (calstemp[i] != 0) {mult += 0.1;}
@@ -175,10 +191,9 @@ public class Cooking {
         }
 
         public void endRound() {
-            if (turn < turnMax) {turn++;}
+            if (turn < turnMax) {turn++;} else {printStats();}
             POT.clear();
             FRIDGE.clear();
-            printStats();
         }
 
         public void printPot() {
@@ -305,11 +320,11 @@ public class Cooking {
         stomach += sizePot();
 
         // Not sure if it will be needed yet but.
-        cals[0] += calPot(FoodGroup.Protein);
-        cals[1] += calPot(FoodGroup.Dairy);
-        cals[2] += calPot(FoodGroup.Vegetable);
-        cals[3] += calPot(FoodGroup.Fruit);
-        cals[4] += calPot(FoodGroup.Grain);
+        cals[0] += calPot(FoodGroup.Fruit);
+        cals[1] += calPot(FoodGroup.Vegetable);
+        cals[2] += calPot(FoodGroup.Grain);
+        cals[3] += calPot(FoodGroup.Protein);
+        cals[4] += calPot(FoodGroup.Dairy);
 
         triggers(Trigger.eat);
 
