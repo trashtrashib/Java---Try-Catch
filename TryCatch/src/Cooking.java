@@ -191,7 +191,7 @@ public class Cooking {
         }
 
         public void endRound() {
-            if (turn < turnMax) {turn++;} else {printStats();}
+            if (turn+1 < turnMax) {turn++;} else {System.out.print("Final "); printStats(); turn++;}
             POT.clear();
             FRIDGE.clear();
         }
@@ -297,6 +297,32 @@ public class Cooking {
 
             eatPot();
 
+        }
+
+        public void setUp() {
+            System.out.printf("Would you like to customize settings?%n(0) No%n(1+) Yes%n%n");
+            if (getInput(in) == 0) {return;}
+
+            System.out.printf("Number of turns (Default is 5): ");
+            int input = getInput(in);
+            while (input < 1) {
+            System.out.printf("Invalid%n%nNumber of turns (Default is 5): "); input = getInput(in);}
+            System.out.printf("%n");
+            turnMax = input;
+            
+            System.out.printf("Number of ingrediants that can be prepared each turn (Default is 2): ");
+            input = getInput(in);
+            while (input < 0) {
+            System.out.printf("Invalid%n%nNumber of ingrediants that can be prepared each turn (Default is 2): "); input = getInput(in);}
+            System.out.printf("%n");
+            preparesMax = input;
+            
+            System.out.printf("Size of stomach (Default is 120): ");
+            input = getInput(in);
+            while (input < 10) {
+            System.out.printf("Invalid%n%nSize of stomach (Default is 120): "); input = getInput(in);}
+            System.out.printf("%n");
+            stomachMax = input;
         }
 
         public int getInput(Scanner in) {
