@@ -1,5 +1,7 @@
 public class Blueberry extends Food {
 
+    public Blueberry() {}
+
     public Blueberry(Cooking game) {
         this.game = game;
         this.name = "Blueberry";
@@ -13,7 +15,7 @@ public class Blueberry extends Food {
     public void special(Trigger cause, boolean inFridge) {
         if (cause == Trigger.added) {
             for (int i = 0; i<(this.cooked ? 4:2); i++) {
-                game.addFood(new Blueberry(game));
+                game.addFood(new BlueberryClone(game,this));
             }
         }
     }

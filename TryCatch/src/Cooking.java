@@ -323,6 +323,13 @@ public class Cooking {
             System.out.printf("Invalid%n%nSize of stomach (Default is 120): "); input = getInput(in);}
             System.out.printf("%n");
             stomachMax = input;
+            
+            System.out.printf("Number of ingrediants per turn (Default is 5): ");
+            input = getInput(in);
+            while (input < 1) {
+            System.out.printf("Invalid%n%nNumber of ingrediants per turn (Default is 5): "); input = getInput(in);}
+            System.out.printf("%n");
+            fridgeSize = input;
         }
 
         public int getInput(Scanner in) {
