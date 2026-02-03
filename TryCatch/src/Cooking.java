@@ -9,26 +9,66 @@ public class Cooking {
     private int score = 0;
     private int[] cals = new int[5]; // Fruit, Veg, Grain, Protein, Dairy
     private int stomach = 0;
-    private int stomachMax = 50;
+    private int stomachMax = 80;
     private int turn = 0;
     private int turnMax = 5;
+    private int prepares = 0;
+    private int preparesMax = 2;
 
     public ArrayList<Food> getPot() {return POT;}
     public ArrayList<Food> getFridge() {return FRIDGE;}
+    public int getScore() {return score;}
+
+    public void setScore(int newScore) {score = newScore;}
 
     public void addFood(Food food) {
         POT.add(food);
         FRIDGE.remove(food);
         refillFridge();
+        food.special(Trigger.added, false);
+        if (food.getGroup() == FoodGroup.Fruit) {triggers(Trigger.addFruit);}
+        triggers(Trigger.add);
+    }
+
+    public void triggers(Trigger cause) {
+        for (int i = 0; i < FRIDGE.size(); i++) {FRIDGE.get(i).special(cause,true);}
+        for (int i = 0; i < POT.size(); i++) {POT.get(i).special(cause,false);}
+    }
+
+    public void cook(Food food) {
+        if (prepares<preparesMax) {
+        food.cook();
+        prepares++;
+    } else {System.out.println("You cannot prepare any more ingredients this turn.");}
+    }
+
+    public void turnPrint() {
+        System.out.printf("Turn: %d/%d.%nMeal Score: %d(%.2f)%nMeal Fruit Calories: %d.%nMeal Vegetable Calories: %d.%nMeal Grain Calories: %d.%nMeal Protein Calories: %d.%nMeal Dairy Calories: %d.%nMeal Size: %d.%n",
+            turn,turnMax,valuePot(),calmult(),calPot(FoodGroup.Fruit),calPot(FoodGroup.Vegetable),calPot(FoodGroup.Grain),calPot(FoodGroup.Protein),calPot(FoodGroup.Dairy),sizePot()
+        );
     }
 
     public void refillFridge() {
         while (FRIDGE.size() < 5) {
 
-            Food newfood;
+            Food newfood = new Broccoli(this);
 
-            switch (RNG.nextInt()) {
-                ////////////////////////////////////////////////////
+            switch (RNG.nextInt(5)) {
+                case 0:
+                    /// Broccoli
+                break;
+                case 1:
+                    newfood = new Beef(this);
+                break;
+                case 2:
+                    newfood = new Loaf(this);
+                break;
+                case 3:
+                    newfood = new Strawberry(this);
+                break;
+                case 4:
+                    newfood = new Cream(this);
+                break;
             }
 
             FRIDGE.add(newfood);
@@ -66,6 +106,7 @@ public class Cooking {
                     if (calstemp[i] * 1.15 > calstemp[j] && calstemp[i] * 0.85 < calstemp[j]) {mult += 0.1;}
                 }
             }
+            mult -= 0.1 * (calstemp[i] / 500); // Reduce mult for each multiple of 200 calories in a single catagory. Used to encourage using multiple turns.s
         }
 
         // Repeat using total values with halved rewards.
@@ -105,7 +146,7 @@ public class Cooking {
         return size;}
 
         public void printStats() {
-            System.out.printf("Score: %d.%nStomach: %d/%d.%nTurn%d/%d%n%nFruit Calories: %d.%nVeggtable Calories: %d.%nGrain Calories: %d.%nProtein Calories: %d.%nDairy Calories: %d.%n",
+            System.out.printf("Score: %d.%nStomach: %d/%d.%nTurn%d/%d%n%nFruit Calories: %d.%nVegetable Calories: %d.%nGrain Calories: %d.%nProtein Calories: %d.%nDairy Calories: %d.%n",
                 score,stomach,stomachMax,turn,turnMax,cals[0],cals[1],cals[2],cals[3],cals[4]);
         }
 

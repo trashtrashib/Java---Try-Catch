@@ -1,15 +1,19 @@
 public class Broccoli extends Food {
     
-    private String name = "Broccoli";
-    private int nutrition = 10;
-    private int calories = 50;
-    private int size = 5;
-    private boolean cooked = false;
-    private FoodGroup group = FoodGroup.Vegetable;
+    protected String name = "Broccoli";
+    protected int nutrition = 15;
+    protected int calories = 70;
+    protected int size = 4;
+    protected boolean cooked = false;
+    protected FoodGroup group = FoodGroup.Vegetable;
+
+    public Broccoli(Cooking game) {this.game = game;}
+    
+    public void special(Trigger cause, boolean inFridge) {}
 
     public void cook() {
         this.calories -= 10;
-        this.size -= 1;
+        this.size--;
         this.name = "Chopped Broccoli";
         this.cooked = true;
     }
@@ -20,7 +24,7 @@ public class Broccoli extends Food {
         }
     }
     public void info() {
-        System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%n",name,nutrition,calories,size);
+        System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Vegetable%n",this.name,this.nutrition,this.calories,this.size);
     }
 
 }

@@ -1,20 +1,21 @@
 public abstract class Food {
 
-    private String name = "";
-    private int nutrition = 0; // How good a food is for you.
-    private int calories = 0; // How many calories.
-    private int size = 0; // How filling it is.
-    private boolean cooked = false; // Has it been modified?
-    private FoodGroup group = FoodGroup.Protein; // What catagory of food it comes from.
+    protected String name = "";
+    protected int nutrition = 0; // How good a food is for you.
+    protected int calories = 0; // How many calories.
+    protected int size = 0; // How filling it is.
+    protected boolean cooked = false; // Has it been modified?
+    protected FoodGroup group = FoodGroup.Protein; // What catagory of food it comes from.
+    protected Cooking game;
 
-    public int getNut() {return nutrition;}
-    public int getCal() {return calories;}
-    public int getSize() {return size;}
-    public FoodGroup getGroup() {return group;}
+    public int getNut() {return this.nutrition;}
+    public int getCal() {return this.calories;}
+    public int getSize() {return this.size;}
+    public FoodGroup getGroup() {return this.group;}
 
     public abstract void cook();
     public abstract void cookinfo();
     public abstract void info();
-
+    public abstract void special(Trigger cause, boolean inFridge);
 
 }
