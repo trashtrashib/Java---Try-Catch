@@ -1,5 +1,5 @@
 public class Cream extends Food {
-    
+
     public Cream(Cooking game) {
         this.game = game;
         this.name = "Cream";
@@ -29,7 +29,7 @@ public class Cream extends Food {
         }
     }
     public void info() {
-        System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Vegetable%n",this.name,this.nutrition,this.calories,this.size);
+        System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Dairy%n",this.name,this.nutrition,this.calories,this.size);
         if (this.cooked) {System.out.printf("Special: Has +2 nutrition for each fruit in the meal.%n%n");} else {System.out.println();}
     }
 

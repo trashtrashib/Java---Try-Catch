@@ -13,6 +13,10 @@ public abstract class Food {
     public int getCal() {return this.calories;}
     public int getSize() {return this.size;}
     public FoodGroup getGroup() {return this.group;}
+    public boolean getCooked() {return cooked;}
+    
+    public void setNut(int nut) {this.nutrition = nut;}
+    public void setCal(int cal) {this.calories = cal;}
 
     public abstract void cook();
     public abstract void cookinfo();

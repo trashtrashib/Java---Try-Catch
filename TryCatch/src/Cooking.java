@@ -16,14 +16,18 @@ public class Cooking {
     private int prepares = 0;
     private int preparesMax = 2;
     private Scanner in;
+    private int fridgeSize = 5;
 
     public Cooking(Scanner scan) {in = scan;}
 
     public ArrayList<Food> getPot() {return POT;}
     public ArrayList<Food> getFridge() {return FRIDGE;}
+    public Random getRandom() {return RNG;}
     public int getScore() {return score;}
+    public int getFridgeSize() {return fridgeSize;}
 
     public void setScore(int newScore) {score = newScore;}
+    public void setFridge(int newSize) {fridgeSize = newSize;};
 
     public void addFood(Food food) {
         POT.add(food);
@@ -41,8 +45,9 @@ public class Cooking {
 
     public void cook(Food food) {
         if (prepares<preparesMax) {
+            if (!food.getCooked()) {
         food.cook();
-        prepares++;
+        prepares++;} else {food.cookinfo();}
     } else {System.out.printf("You cannot prepare any more ingredients this turn.%n%n");}
     }
 
@@ -53,11 +58,11 @@ public class Cooking {
     }
 
     public void refillFridge() {
-        while (FRIDGE.size() < 5) {
+        while (FRIDGE.size() < fridgeSize) {
 
             Food newfood = new Broccoli(this);
 
-            switch (RNG.nextInt(5)) {
+            switch (RNG.nextInt(10)) {
                 case 0:
                     /// Broccoli
                 break;
@@ -72,6 +77,21 @@ public class Cooking {
                 break;
                 case 4:
                     newfood = new Cream(this);
+                break;
+                case 5:
+                    newfood = new Almond(this);
+                break;
+                case 6:
+                    newfood = new Carrot(this);
+                break;
+                case 7:
+                    newfood = new Milk(this);
+                break;
+                case 8:
+                    newfood = new Watermelon(this);
+                break;
+                case 9:
+                    newfood = new Rice(this);
                 break;
             }
 
@@ -290,6 +310,8 @@ public class Cooking {
         cals[2] += calPot(FoodGroup.Vegetable);
         cals[3] += calPot(FoodGroup.Fruit);
         cals[4] += calPot(FoodGroup.Grain);
+
+        triggers(Trigger.eat);
 
         endRound();
     }
