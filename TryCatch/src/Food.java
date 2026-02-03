@@ -8,6 +8,7 @@ public abstract class Food {
     protected FoodGroup group = FoodGroup.Protein; // What catagory of food it comes from.
     protected Cooking game;
 
+    public String getName() {return this.name;}
     public int getNut() {return this.nutrition;}
     public int getCal() {return this.calories;}
     public int getSize() {return this.size;}

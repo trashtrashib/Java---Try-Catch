@@ -1,13 +1,14 @@
 public class Broccoli extends Food {
-    
-    protected String name = "Broccoli";
-    protected int nutrition = 15;
-    protected int calories = 70;
-    protected int size = 4;
-    protected boolean cooked = false;
-    protected FoodGroup group = FoodGroup.Vegetable;
 
-    public Broccoli(Cooking game) {this.game = game;}
+    public Broccoli(Cooking game) {
+        this.game = game;
+        this.name = "Broccoli";
+        this.nutrition = 15;
+        this.calories = 70;
+        this.size = 4;
+        this.cooked = false;
+        this.group = FoodGroup.Vegetable;
+    }
     
     public void special(Trigger cause, boolean inFridge) {}
 
@@ -19,12 +20,12 @@ public class Broccoli extends Food {
     }
     public void cookinfo() {
         if (!this.cooked) {
-        System.out.printf("Chop up broccoli:%n-10 Calories.%n-1 Size.%n");} else {
-            System.out.println("Broccoli has already been chopped.");
+        System.out.printf("Chop up broccoli:%n-10 Calories.%n-1 Size.%n%n");} else {
+            System.out.printf("Broccoli has already been chopped.%n%n");
         }
     }
     public void info() {
-        System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Vegetable%n",this.name,this.nutrition,this.calories,this.size);
+        System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Vegetable%n%n",this.name,this.nutrition,this.calories,this.size);
     }
 
 }

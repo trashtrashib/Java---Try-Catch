@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Cooking {
     
@@ -9,11 +10,14 @@ public class Cooking {
     private int score = 0;
     private int[] cals = new int[5]; // Fruit, Veg, Grain, Protein, Dairy
     private int stomach = 0;
-    private int stomachMax = 80;
+    private int stomachMax = 120;
     private int turn = 0;
     private int turnMax = 5;
     private int prepares = 0;
     private int preparesMax = 2;
+    private Scanner in;
+
+    public Cooking(Scanner scan) {in = scan;}
 
     public ArrayList<Food> getPot() {return POT;}
     public ArrayList<Food> getFridge() {return FRIDGE;}
@@ -39,12 +43,12 @@ public class Cooking {
         if (prepares<preparesMax) {
         food.cook();
         prepares++;
-    } else {System.out.println("You cannot prepare any more ingredients this turn.");}
+    } else {System.out.printf("You cannot prepare any more ingredients this turn.%n%n");}
     }
 
     public void turnPrint() {
-        System.out.printf("Turn: %d/%d.%nMeal Score: %d(%.2f)%nMeal Fruit Calories: %d.%nMeal Vegetable Calories: %d.%nMeal Grain Calories: %d.%nMeal Protein Calories: %d.%nMeal Dairy Calories: %d.%nMeal Size: %d.%n",
-            turn,turnMax,valuePot(),calmult(),calPot(FoodGroup.Fruit),calPot(FoodGroup.Vegetable),calPot(FoodGroup.Grain),calPot(FoodGroup.Protein),calPot(FoodGroup.Dairy),sizePot()
+        System.out.printf("Turn: %d/%d.%nMeal Score: %d(%.2fx)%nCan Prepare %d ingrediants.%nMeal Fruit Calories: %d.%nMeal Vegetable Calories: %d.%nMeal Grain Calories: %d.%nMeal Protein Calories: %d.%nMeal Dairy Calories: %d.%nMeal Size: %d.%n%n",
+            turn+1,turnMax,valuePot(),calmult(),preparesMax-prepares,calPot(FoodGroup.Fruit),calPot(FoodGroup.Vegetable),calPot(FoodGroup.Grain),calPot(FoodGroup.Protein),calPot(FoodGroup.Dairy),sizePot()
         );
     }
 
@@ -109,7 +113,7 @@ public class Cooking {
             mult -= 0.1 * (calstemp[i] / 500); // Reduce mult for each multiple of 200 calories in a single catagory. Used to encourage using multiple turns.s
         }
 
-        // Repeat using total values with halved rewards.
+        // Repeat using total values with halved rewards and more linient conditions.
         calstemp[0] = cals[0];
         calstemp[1] = cals[1];
         calstemp[2] = cals[2];
@@ -122,8 +126,8 @@ public class Cooking {
         for (int i = 0; i<5; i++) { // Loop over each element and add 0.05 to mult for each other element with the same value and each element within 15% of that value. Excluding values equaling 0.
             for (int j = 0; j<5; j++) {
                 if (i != j && calstemp[j] != 0 && calstemp[i] != 0) {
-                    if (calstemp[i] == calstemp[j]) {mult += 0.05;}
-                    if (calstemp[i] * 1.15 > calstemp[j] && calstemp[i] * 0.85 < calstemp[j]) {mult += 0.05;}
+                    if (calstemp[i] * 1.05 > calstemp[j] && calstemp[i] * 0.95 < calstemp[j]) {mult += 0.05;}
+                    if (calstemp[i] * 1.2 > calstemp[j] && calstemp[i] * 0.8 < calstemp[j]) {mult += 0.05;}
                 }
             }
         }
@@ -141,20 +145,138 @@ public class Cooking {
     public int sizePot() { // loop through pot to get how much to add to stomach.
         int size = 0;
         for (int i = 0; i<POT.size(); i++) {
-            size += POT.get(i).getCal();
+            size += POT.get(i).getSize();
         }
         return size;}
 
         public void printStats() {
-            System.out.printf("Score: %d.%nStomach: %d/%d.%nTurn%d/%d%n%nFruit Calories: %d.%nVegetable Calories: %d.%nGrain Calories: %d.%nProtein Calories: %d.%nDairy Calories: %d.%n",
-                score,stomach,stomachMax,turn,turnMax,cals[0],cals[1],cals[2],cals[3],cals[4]);
+            System.out.printf("Score: %d.%nStomach: %d/%d.%nTurn: %d/%d%n%nFruit Calories: %d.%nVegetable Calories: %d.%nGrain Calories: %d.%nProtein Calories: %d.%nDairy Calories: %d.%n%n",
+                score,stomach,stomachMax,turn+1,turnMax,cals[0],cals[1],cals[2],cals[3],cals[4]);
         }
 
         public void endRound() {
-            turn++;
+            if (turn < turnMax) {turn++;}
             POT.clear();
             FRIDGE.clear();
             printStats();
+        }
+
+        public void printPot() {
+            System.out.println("Meal includes:");
+            for (int i = 0; i < POT.size(); i++) {
+                System.out.printf("(%d) %s%n",i+1,POT.get(i).getName());
+            }
+            System.out.println();
+        }
+
+        public void printFridge() {
+            System.out.println("Avalible Ingrediants:");
+            for (int i = 0; i < FRIDGE.size(); i++) {
+                System.out.printf("(%d) %s%n",i+POT.size()+1,FRIDGE.get(i).getName());
+            }
+            System.out.println();
+        }
+
+        public void round() {
+
+            while (turn < turnMax) {
+                turn();
+            }
+
+        }
+
+        public void turn() {
+
+            prepares = 0;
+            refillFridge();
+
+            printStats();
+            turnPrint();
+
+            printPot();
+            printFridge();
+
+            System.out.printf("Select from meal to read info, select from ingrediants for more options. Type '0' to end turn.%n%n");
+
+            int input = getInput(in);
+
+            while (input != 0) {
+
+                if (input > 0 && input <= POT.size()+FRIDGE.size()) {
+
+                if (input <= POT.size()) {
+
+                    POT.get(input-1).info();
+
+                } else {
+
+                    FRIDGE.get((input-POT.size())-1).info();
+                    System.out.printf("(0) Back.%n(1) Add to meal.%n(2) Prepare info.%n(3) Prepare Ingrediant.%n%n");
+
+                    int saveInput = (input-POT.size())-1;
+                    input = getInput(in);
+
+                    while (input != 0)
+                    {
+                        switch (input)
+                        {
+                            default:
+                            System.out.printf("Invalid.%n%n");
+                            break;
+                            case 1:
+                            addFood(FRIDGE.get(saveInput));
+                            break;
+                            case 2:
+                            FRIDGE.get(saveInput).cookinfo();
+                            break;
+                            case 3:
+                            cook(FRIDGE.get(saveInput));
+                            FRIDGE.get(saveInput).info();
+                            break;
+                        }
+                        if (input == 1) {
+                            turnPrint();
+
+                            printPot();
+                            printFridge();
+
+                            System.out.printf("Select from meal to read info, select from ingrediants for more options. Type '0' to end turn.%n%n");
+                            break;
+                        }
+                        input = getInput(in);
+                    }
+                    if (input == 0) {
+                            turnPrint();
+
+                            printPot();
+                            printFridge();
+
+                            System.out.printf("Select from meal to read info, select from ingrediants for more options. Type '0' to end turn.%n%n");
+                        }
+
+                }
+
+                } else {System.out.printf("Invalid.%n%n");}
+                input = getInput(in);
+            }
+
+            eatPot();
+
+        }
+
+        public int getInput(Scanner in) {
+
+            int input = -999;
+
+            while (input == -999) {
+            try {
+                input = in.nextInt();
+                if (input == -999) {System.out.printf("Invalid.%n%n");} // Still print invalid if user inputs -999.
+            } catch(Exception e) {
+                System.out.printf("Invalid.%n%n");
+            }}
+
+            return input;
         }
 
     public void eatPot() { // Add pot stats and end the round if it fits, otherwise warn the player.
@@ -171,7 +293,7 @@ public class Cooking {
 
         endRound();
     }
-    else {System.out.println("The pot is too big!!!");}
+    else {System.out.printf("The pot is too big!!!%n%n"); endRound();}
     }
 
 }

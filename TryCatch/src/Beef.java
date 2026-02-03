@@ -1,13 +1,14 @@
 public class Beef extends Food {
-    
-    protected String name = "Beef";
-    protected int nutrition = 25;
-    protected int calories = 250;
-    protected int size = 10;
-    protected boolean cooked = false;
-    protected FoodGroup group = FoodGroup.Protein;
 
-    public Beef(Cooking game) {this.game = game;}
+    public Beef(Cooking game) {
+        this.game = game;
+        this.name = "Beef";
+        this.nutrition = 25;
+        this.calories = 250;
+        this.size = 10;
+        this.cooked = false;
+        this.group = FoodGroup.Protein;
+    }
 
     public void special(Trigger cause, boolean inFridge) {
         if (this.cooked && cause == Trigger.add && inFridge) {this.nutrition++;} // Gains nutrition if it has been made into jerky whenever something is added to the pot.
@@ -22,12 +23,12 @@ public class Beef extends Food {
     public void cookinfo() {
         if (!this.cooked) {
         System.out.printf("Make jerky:%n-8 Nutrition.%n-3 Size.%nGains +1 nutrition whenever you add another ingrediant to the meal before it.%n");} else {
-            System.out.println("The beef has already been jerked.");
+            System.out.printf("The beef has already been jerked.%n%n");
         }
     }
     public void info() {
         System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Protein%n",this.name,this.nutrition,this.calories,this.size);
-        if (this.cooked) {System.out.println("Special: Gains +1 nutrition whenever you add another ingrediant to the meal before it.");}
+        if (this.cooked) {System.out.printf("Special: Gains +1 nutrition whenever you add another ingrediant to the meal before it.%n%n");} else {System.out.println();}
     }
 
 }
