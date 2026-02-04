@@ -1,6 +1,6 @@
 public class Almond extends Food {
 
-    public Almond(Cooking game) {
+    public Almond(Cooking game) { // Constructer.
         this.game = game;
         this.name = "Almonds";
         this.nutrition = 16;
@@ -10,23 +10,23 @@ public class Almond extends Food {
         this.group = FoodGroup.Protein;
     }
 
-    public void special(Trigger cause, boolean inFridge) {
+    public void special(Trigger cause, boolean inFridge) { // Reduce nutrition by 20 with a 20% chance
         if (!this.cooked && cause == Trigger.added && game.getRandom().nextInt(10) < 2) {this.nutrition -= 20;} // Gains nutrition if it has been made into jerky whenever something is added to the pot.
     }
 
-    public void cook() {
+    public void cook() { // Apply effects of cooking.
         this.nutrition -= 7;
         this.size -= 3;
         this.name = "Roasted Almonds";
         this.cooked = true;
     }
-    public void cookinfo() {
+    public void cookInfo() { // Print what happens what cooked, or tell the player they already have been.
         if (!this.cooked) {
         System.out.printf("Roast the almonds:%nNo longer has a chance to poison the meal.%n");} else {
             System.out.printf("The almonds will never recover from this.%n%n");
         }
     }
-    public void info() {
+    public void info() { // Print Ingrediant stats.
         System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Protein%n",this.name,this.nutrition,this.calories,this.size);
         if (!this.cooked) {System.out.printf("Special: Has a 1 in 5 chance to lose 20 nutrition when added.%n%n");} else {System.out.println();}
     }

@@ -1,4 +1,4 @@
-public abstract class Food {
+public abstract class Food { // Parent class for all food items.
 
     protected String name = "";
     protected int nutrition = 0; // How good a food is for you.
@@ -6,8 +6,9 @@ public abstract class Food {
     protected int size = 0; // How filling it is.
     protected boolean cooked = false; // Has it been modified?
     protected FoodGroup group = FoodGroup.Protein; // What catagory of food it comes from.
-    protected Cooking game;
+    protected Cooking game; // Used so items can interact with the manager object.
 
+    // Getters and setters.
     public String getName() {return this.name;}
     public int getNut() {return this.nutrition;}
     public int getCal() {return this.calories;}
@@ -18,8 +19,9 @@ public abstract class Food {
     public void setNut(int nut) {this.nutrition = nut;}
     public void setCal(int cal) {this.calories = cal;}
 
+    // Abstract methods.
     public abstract void cook();
-    public abstract void cookinfo();
+    public abstract void cookInfo();
     public abstract void info();
     public abstract void special(Trigger cause, boolean inFridge);
 

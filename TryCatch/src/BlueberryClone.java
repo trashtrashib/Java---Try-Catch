@@ -1,6 +1,6 @@
-public class BlueberryClone extends Blueberry {
+public class BlueberryClone extends Food {
 
-    public BlueberryClone(Cooking game, Blueberry parent) {
+    public BlueberryClone(Cooking game, Blueberry parent) { // copies parents stats.
         this.game = game;
         this.name = parent.name;
         this.nutrition = parent.nutrition;
@@ -10,6 +10,11 @@ public class BlueberryClone extends Blueberry {
         this.group = parent.group;
     }
     
+
+    // Dummy methods for abstract class.
     public void special(Trigger cause, boolean inFridge) {}
+    public void info() {}
+    public void cookInfo() {}
+    public void cook() {}
 
 }

@@ -1,4 +1,4 @@
-## Cooking Game
+### Cooking Game
 This program runs an arcade style game where you pick ingrediants and create (often goofy looking) meals to get points looking for a highscore.
 
 ## Ingrediants
@@ -25,3 +25,11 @@ Some ingrediants have special effects that can modify the game. These will be sh
 Each turn you are offered 5 ingrediants to choose from, you may prepare ingrediants from this list, and/or add them to the meal. Once an ingrediant has been added, it cannot be removed or prepared. Whenever you add an ingrediant it will be replaced so the number of ingrediants offered is always the same. When you are satisfied with the current meal, you can end the turn, if the meal does not exceed the stomach limit you will receive score equal to the total nutrition value times your multiplier and the size and calories will be added to the round totals. Once a turn ends, the meal and offered ingrediants are reset and you can begin creating another meal.
 
 Each game has a limited number of turns to earn points, when the last turn finishes your final score is determined. While the number of turns is limited, you will probably run out of stomach space before the final turn, so be careful.
+
+### Lab Stuff
+
+* Try/Catch exception handling at Cooking line 332.
+
+* Food abstract class and methods.
+
+* Program uses two enum classes. (FoodGroup and Trigger)

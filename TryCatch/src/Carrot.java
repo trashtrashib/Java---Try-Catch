@@ -1,6 +1,6 @@
 public class Carrot extends Food {
 
-    public Carrot(Cooking game) {
+    public Carrot(Cooking game) { // Constructer.
         this.game = game;
         this.name = "Carrot";
         this.nutrition = 10;
@@ -10,21 +10,21 @@ public class Carrot extends Food {
         this.group = FoodGroup.Vegetable;
     }
     
-    public void special(Trigger cause, boolean inFridge) {
+    public void special(Trigger cause, boolean inFridge) { // Increase fridge size when eaten while cooked.
         if (this.cooked && cause == Trigger.eat && !inFridge) {game.setFridge(game.getFridgeSize() + 1);}
     }
 
-    public void cook() {
+    public void cook() { // Apply effects of cooking.
         this.name = "Boiled Carrots";
         this.cooked = true;
     }
-    public void cookinfo() {
+    public void cookInfo() { // Print what happens what cooked, or tell the player they already have been.
         if (!this.cooked) {
         System.out.printf("Boil carrot:%nReceive an additional ingrediant for the rest of the game when eaten.%n%n");} else {
             System.out.printf("Soggy...%n%n");
         }
     }
-    public void info() {
+    public void info() { // Print Ingrediant stats.
         System.out.printf("%s:%nNutrition Value: %d.%nCalories: %d.%nSize: %d.%nGroup: Vegetable%n%n",this.name,this.nutrition,this.calories,this.size);
         if (this.cooked) {System.out.printf("Special: Receive an additional ingrediant for the rest of the game when eaten.%n%n");} else {System.out.println();}
     }
