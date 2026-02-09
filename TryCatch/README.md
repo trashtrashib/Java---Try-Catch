@@ -28,8 +28,10 @@ Each game has a limited number of turns to earn points, when the last turn finis
 
 ## Lab Stuff
 
-* Try/Catch exception handling at Cooking line 332.
+* Try/Catch exception handling at Cooking line 382.
 
 * Food abstract class and methods.
 
 * Program uses two enum classes. (FoodGroup and Trigger)
+
+* Scoreboard system uses file I/O. Lines 303.
