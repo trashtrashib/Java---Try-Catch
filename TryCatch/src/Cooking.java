@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Cooking {
     
@@ -293,6 +297,52 @@ public class Cooking {
             }
 
             eatPot(); // End the turn.
+
+        }
+
+        public void scoreBoard(File save) {
+
+            int[] board = new int[10];
+            String[] nameBoard = new String[10];
+            try (Scanner read = new Scanner(save);) {
+            for (int i = 0; i <10; i++) {
+                nameBoard[i] = "";
+                if (read.hasNextLine()) {
+                    board[i] = Integer.parseInt(read.nextLine());
+                    nameBoard[i] = read.nextLine();
+                }
+            }
+            } catch (FileNotFoundException e) {}
+
+
+            int i = 0;
+            while (i < 10 && board[i] >= score) {
+                i++;
+            }
+            if (i < 10) {
+            System.out.printf("Name of score: ");
+            in.nextLine();
+            String name = in.nextLine();
+
+            try (FileWriter file = new FileWriter(save)) {
+            for (int j = 0; j < 10; j++) {
+                if (j == i) {
+                    System.out.printf("%s   %d%n",name,score);
+                file.write(String.valueOf(score) + "\n");
+                file.write(name + "\n");} else {
+                    System.out.printf("%s   %d%n",nameBoard[j - (j < i ? 0:1)],board[j - (j < i ? 0:1)]);
+                file.write(String.valueOf(board[j - (j < i ? 0:1)]) + "\n");
+                file.write(nameBoard[j - (j < i ? 0:1)] + "\n");
+                }
+            }
+
+            file.close();
+
+            } catch(IOException e) {
+                System.out.printf("Error: Could not save.");
+            }
+
+        }
 
         }
 
